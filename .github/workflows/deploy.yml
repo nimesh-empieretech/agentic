@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to server with SSH
+      - name: Deploy to EC2 with SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.HOST }}
@@ -18,8 +18,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd agentic/
+            cd /home/ec2-user/agentic
             git pull origin main
             source venv/bin/activate
             pip install -r requirements.txt
-            systemctl restart agentic
+            pm2 restart agentic
+            pm2 save
+            pm2 list

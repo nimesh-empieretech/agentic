@@ -13,34 +13,10 @@ jobs:
       - name: Deploy to EC2 with SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: 13.53.133.2
-          username: ec2-user
-          key: MIIEpQIBAAKCAQEA20vQUcfPuYb+DWwkbH0RH6TYGsqaYp5ojGWVffrqcVsLCjt0
-el1m5OSDK0jCdLlEym/sc/9iSL+o7WIyoH1qYFMWyWsax55bQtK5Cj2l+uh7clSw
-3wCFs+ZiotVay/stcnosHslGxQlFEwbUV53YYv9EYp/NXQj4w6C0UykoNA5wFTS2
-O6EBN9UPh6vjfvp8DqYbCNiblrqO5U4yhRNClKtMxvGwf72K9jAeXMLh0o3NA2L7
-DYchot9pwfQQCGHDgHUtOOQiSq+cBNJjWSelWZtOcBZlJXoNfC/lmL1oN+U+P4bF
-wpoKxJA6mfn0M4BmJmMRGHCc9MsJ2DaUK3xsZQIDAQABAoIBAQDApOUoMoOE09Wy
-LOICfAvi5IkDYCAnqkjlrQeaWCZD1lrobjpwlESjpyqjh5NrvqVzwMbTT/IjPltD
-zhPzcLlWTSejYXdxDOfW2A69tFJvDHQFh+iovmi2FRlpOkw9DTZrbm/7y41j4jTP
-9hvrrDo/HUgR65gYtpzyHebLd0heEQBhJlZ6qUv9L+aUac4fUB+lWQuKAYE8yZ90
-JlTiV7Cj8pbwdYYB40x78ogH9ueFJEli3fmcPr3/6FpfkwXVTIgLAPxpfXzY+3IS
-uzrzBP6zlTIiATpuVi1NfbLpVn80ocifqdiz/tyjQlQKFV+BcDnPBXEWaKfplCRG
-iVLAmf4xAoGBAPRKjLdI3FIF2edsYSUuY/ir5azpZeHkRRIlwXNgVvdISBVkGB2v
-ghYTs9Dxb08RPizL7VVCKhLn2/43HSgw/0nFpQirOvCNipzYo+UTLyGGFRdA74gU
-stoGPVZlrbnr8pSMnNkc8qIQrBTgJUQL7xxps+6tXEfFZ2hFfuiS1SfDAoGBAOXO
-ky/7JY4jE5ij0Z/XeF6vkXPIfFVai7OTbng1T1bKP2rPmBKqMvY/rEpQNPcSAkd7
-4wOkutXbBLnkUReUJDeQ+Y1blWxViYwxA4OHMZ6XnrxECTGfxzz6WqTL5Muc0YDf
-YvooFW7Y7ViX3siiS4h0kEG5Gchp1ctAqV1BnwC3AoGBAJqNB5V1XR3vYbqN0K/r
-N4g9iGLqjnBpMGGYzVinHJ35dtFBsBgnz08US/DmrhsBt6ozogUMhP3M/ltIlwO0
-a+5KQmzHl9RUV9t/G8Fzb5/v6iv6AxC+t6BDzk54qX40jhX5F8osDD0H+zaB0FHK
-kw4QuatItlcZxqArR2zwaDZtAoGATb8hlK4G+ptrWcyycr1W/9GuB9ngFpBXix1p
-1klS2i36Xox1CnuCWkUYaNvRz3TMSJrlJqpoe0lpw+o2dR+tUQ8/Hk/JsakOq9s5
-MRpf8yOglFkAM0W3Bi481FwWv7wCNPNebPt6pNHHGp3mxUIDA9tLorCYxHDp36W0
-ptQ4kukCgYEApYHi1Fz0Pw32gWSgx5kf07oH4pZ4iMm0156e4chRqcqGTfxoPuyc
-aueU2m7MTsLnuzLZJCHH5T9sHA7gF4RcXGXDsJeQJfDZ1J2LaTeoMCe2RbXq5pkf
-Mz+1h9m1rLNWLWGs1bqJoEU79sjX9wkRE4ohJ8QcGCWmIF5VPBLDJ4Y=
-          port: 22
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /home/ec2-user/agentic
             git pull origin main

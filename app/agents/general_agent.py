@@ -1,4 +1,4 @@
-from app.tools import general_tool
+from app.tools.tools import general_tool
 
 
 def general_agent(goal: str):

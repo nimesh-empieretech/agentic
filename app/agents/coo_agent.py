@@ -1,4 +1,4 @@
-from app.tools import operations_tool
+from app.tools.tools import operations_tool
 
 
 def coo_agent(goal: str):

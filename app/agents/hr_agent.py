@@ -1,4 +1,4 @@
-from app.tools import hr_tool
+from app.tools.tools import hr_tool
 
 
 def hr_agent(goal: str):

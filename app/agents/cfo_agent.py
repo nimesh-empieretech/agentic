@@ -1,4 +1,4 @@
-from app.tools import finance_tool
+from app.tools.tools import finance_tool
 
 
 def cfo_agent(goal: str):

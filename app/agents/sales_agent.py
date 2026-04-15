@@ -1,4 +1,4 @@
-from app.tools import sales_tool
+from app.tools.tools import sales_tool
 
 
 def sales_agent(goal: str):

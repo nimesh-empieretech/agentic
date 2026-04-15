@@ -43,7 +43,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"message": "Enterprise multi-agent backend running"}
+    return {"message": "multi-agent backend running"}
 
 
 @app.post("/auth/register")

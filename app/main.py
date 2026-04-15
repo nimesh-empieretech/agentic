@@ -115,7 +115,8 @@ def run_agent(
         notification_email=payload.notification_email,
         notification_whatsapp=payload.notification_whatsapp,
     )
-
+ 
+  
     try:
         task = update_task_status(db, task.id, "running")
 
@@ -131,7 +132,7 @@ def run_agent(
         return task
 
     except Exception as e:
-        print("ERROR:", e)
+        print("ERROR: ddd", e)
 
         task = update_task_status(db, task.id, "failed", str(e))
 

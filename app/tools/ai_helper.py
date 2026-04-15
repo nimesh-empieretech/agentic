@@ -10,20 +10,23 @@ def generate_ai_response(role: str, goal: str) -> str:
     prompt = f"""
 You are a professional {role} in an enterprise company.
 
-User request:
+User message:
 {goal}
 
 Instructions:
-- Give a clear and helpful response
-- Be professional and concise
+- Reply naturally and professionally
+- Be helpful and practical
 - Ask follow-up questions if needed
-- Provide actionable guidance
-- Do not mention AI
+- Keep the reply clear
+- Do not mention AI, model, or system
+- If the user greets, reply politely
+- If the user asks for a service, explain the next steps
 
 Response:
 """
     try:
         response = model.generate_content(prompt)
-        return response.text.strip()
+        text = getattr(response, "text", "") or ""
+        return text.strip() if text.strip() else "Sorry, I could not generate a proper response."
     except Exception as e:
         return f"Error generating response: {str(e)}"

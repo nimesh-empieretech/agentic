@@ -27,3 +27,7 @@ def hr_tool(goal: str) -> str:
 
 def sales_tool(goal: str) -> str:
     return generate_ai_response("Sales Consultant", goal)
+
+
+def general_tool(goal: str) -> str:
+    return generate_ai_response("Customer Support Assistant", goal)

@@ -41,14 +41,28 @@ def create_task(
 
 
 def update_task_status(
-    db: Session, task_id: int, status_value: str, result: str = None
+    db: Session,
+    task_id: int,
+    status_value: str,
+    result: str = None,
+    department: str = None,
+    assigned_agent: str = None,
 ):
     task = db.query(AgentTask).filter(AgentTask.id == task_id).first()
     if not task:
         return None
+
     task.status = status_value
+
     if result is not None:
         task.result = result
+
+    if department is not None:
+        task.department = department
+
+    if assigned_agent is not None:
+        task.assigned_agent = assigned_agent
+
     db.commit()
     db.refresh(task)
     return task

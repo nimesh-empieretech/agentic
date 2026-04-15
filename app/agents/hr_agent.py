@@ -5,7 +5,7 @@ def hr_agent(goal: str):
     result = hr_tool(goal)
     return {
         "department": "HR",
-        "assigned_agent": "Employees",
+        "assigned_agent": "HR Manager",
         "result": result,
         "status": "completed",
     }

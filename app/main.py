@@ -25,8 +25,6 @@ from app.crud import (
 from app.auth import verify_password, create_access_token
 from app.dependencies import get_current_user
 from app.agents.ceo_agent import ceo_agent
-from app.notifications import send_email_notification, send_whatsapp_notification
-
 
 Base.metadata.create_all(bind=engine)
 
@@ -112,28 +110,35 @@ def run_agent(
         department="CEO",
         assigned_agent="Router",
         owner_id=current_user.id,
-        notification_email=payload.notification_email,
-        notification_whatsapp=payload.notification_whatsapp,
+        notification_email=getattr(payload, "notification_email", None),
+        notification_whatsapp=getattr(payload, "notification_whatsapp", None),
     )
- 
-  
+
     try:
-        task = update_task_status(db, task.id, "running")
+        task = update_task_status(
+            db=db,
+            task_id=task.id,
+            status_value="running",
+        )
 
         response = ceo_agent(payload.goal)
 
         task = update_task_status(
-            db,
-            task.id,
-            response.get("status", "completed"),
-            response.get("result", "No result"),
+            db=db,
+            task_id=task.id,
+            status_value=response.get("status", "completed"),
+            result=response.get("result", "No result"),
+            department=response.get("department", "CEO"),
+            assigned_agent=response.get("assigned_agent", "Router"),
         )
 
         return task
 
     except Exception as e:
-        print("ERROR: ddd", e)
-
-        task = update_task_status(db, task.id, "failed", str(e))
-
+        task = update_task_status(
+            db=db,
+            task_id=task.id,
+            status_value="failed",
+            result=str(e),
+        )
         return task

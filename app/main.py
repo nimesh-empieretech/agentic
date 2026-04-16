@@ -3,6 +3,7 @@ from typing import List
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from app.models import AgentTask
 
 from app.database import Base, engine, get_db
 from app.schemas import (
@@ -90,10 +91,14 @@ def agent_history(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    tasks = get_all_tasks(db, current_user.id)
+    tasks = (
+        db.query(AgentTask)
+        .filter(AgentTask.owner_id == current_user.id)  # ✅ filter by token user
+        .order_by(AgentTask.id.desc())
+        .all()
+    )
 
     return tasks if tasks else []
-
 
 @app.post("/agent/run", response_model=TaskResponse)
 def run_agent(

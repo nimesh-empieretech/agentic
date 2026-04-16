@@ -90,12 +90,9 @@ def agent_history(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    tasks = get_all_tasks(db)
+    tasks = get_all_tasks(db, current_user.id)
 
-    if tasks is None:
-        return []
-
-    return tasks
+    return tasks if tasks else []
 
 
 @app.post("/agent/run", response_model=TaskResponse)

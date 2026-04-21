@@ -95,11 +95,8 @@ def agent_history(
         db.query(AgentTask)
         .filter(AgentTask.owner_id == current_user.id)
         .order_by(AgentTask.id.desc())
-        .execution_options(populate_existing=True)
         .all()
     )
-
-    print(f"User: {current_user.id}, Tasks: {len(tasks)}")
 
     return tasks
 

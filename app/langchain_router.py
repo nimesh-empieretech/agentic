@@ -6,6 +6,53 @@ VALID = {"CTO", "COO", "CFO", "HR", "SALES", "GENERAL"}
 
 
 def smart_route_task(goal: str):
+    text = goal.lower().strip()
+
+    if "open whatsapp" in text or text == "whatsapp":
+        return {
+            "department": "GENERAL",
+            "message": "Opening WhatsApp",
+            "action": "open_app",
+            "app": "whatsapp",
+            "url": "919999999999",
+        }
+
+    if "open youtube" in text or text == "youtube":
+        return {
+            "department": "GENERAL",
+            "message": "Opening YouTube",
+            "action": "open_app",
+            "app": "youtube",
+            "url": "https://youtu.be/dQw4w9WgXcQ",
+        }
+
+    if "call" in text or "dial" in text:
+        return {
+            "department": "GENERAL",
+            "message": "Opening dialer",
+            "action": "open_app",
+            "app": "phone",
+            "url": "919999999999",
+        }
+
+    if "sms" in text or "message" in text:
+        return {
+            "department": "GENERAL",
+            "message": "Opening messages",
+            "action": "open_app",
+            "app": "sms",
+            "url": "919999999999",
+        }
+
+    if "email" in text or "mail" in text:
+        return {
+            "department": "GENERAL",
+            "message": "Opening email",
+            "action": "open_app",
+            "app": "email",
+            "url": "test@gmail.com",
+        }
+
     prompt = f"""
 Return ONLY valid JSON in this format:
 {{
@@ -15,14 +62,6 @@ Return ONLY valid JSON in this format:
   "app": "youtube|whatsapp|phone|sms|email|browser|null",
   "url": "optional value"
 }}
-
-Examples:
-- Open YouTube -> {{"department":"GENERAL","message":"Opening YouTube","action":"open_app","app":"youtube","url":"https://youtu.be/dQw4w9WgXcQ"}}
-- Open WhatsApp -> {{"department":"GENERAL","message":"Opening WhatsApp","action":"open_app","app":"whatsapp","url":"919999999999"}}
-- Call someone -> {{"department":"GENERAL","message":"Opening dialer","action":"open_app","app":"phone","url":"919999999999"}}
-- Send SMS -> {{"department":"GENERAL","message":"Opening messages","action":"open_app","app":"sms","url":"919999999999"}}
-- Send email -> {{"department":"GENERAL","message":"Opening email","action":"open_app","app":"email","url":"test@gmail.com"}}
-- Open website -> {{"department":"GENERAL","message":"Opening browser","action":"open_app","app":"browser","url":"https://google.com"}}
 
 Task: {goal}
 """

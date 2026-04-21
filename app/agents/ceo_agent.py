@@ -1,4 +1,5 @@
-from app.langchain_router import smart_route_task
+from app.ai_router import smart_route_task
+
 from app.agents.cto_agent import cto_agent
 from app.agents.coo_agent import coo_agent
 from app.agents.cfo_agent import cfo_agent

@@ -26,7 +26,6 @@ from app.crud import (
 from app.auth import verify_password, create_access_token
 from app.dependencies import get_current_user
 from app.agents.ceo_agent import ceo_agent
-from langchain_openrouter import ChatOpenRouter
 
 Base.metadata.create_all(bind=engine)
 

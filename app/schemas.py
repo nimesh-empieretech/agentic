@@ -30,9 +30,13 @@ class TaskResponse(BaseModel):
     goal: str
     department: str
     assigned_agent: str
-    result: Optional[str] = None
+    result: str
     status: str
     created_at: datetime
+
+    action: Optional[str] = None
+    app: Optional[str] = None
+    url: Optional[str] = None
 
     class Config:
         from_attributes = True

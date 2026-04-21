@@ -1,4 +1,4 @@
-from app.ai_router import smart_route_task
+from app.langchain_router import smart_route_task
 from app.agents.cto_agent import cto_agent
 from app.agents.coo_agent import coo_agent
 from app.agents.cfo_agent import cfo_agent
@@ -8,29 +8,39 @@ from app.agents.general_agent import general_agent
 
 
 def ceo_agent(goal: str):
-    department = smart_route_task(goal)
+    route = smart_route_task(goal)
+    department = route.get("department", "GENERAL")
+
+    if route.get("action") == "open_app":
+        return {
+            "department": department,
+            "assigned_agent": "APP_ACTION",
+            "result": route.get("message", ""),
+            "status": "completed",
+            "action": route.get("action"),
+            "app": route.get("app"),
+            "url": route.get("url"),
+        }
 
     if department == "CTO":
-        return cto_agent(goal)
-
-    if department == "COO":
-        return coo_agent(goal)
-
-    if department == "CFO":
-        return cfo_agent(goal)
-
-    if department == "HR":
-        return hr_agent(goal)
-
-    if department == "SALES":
-        return sales_agent(goal)
-
-    if department == "GENERAL":
-        return general_agent(goal)
+        result = cto_agent(goal)
+    elif department == "COO":
+        result = coo_agent(goal)
+    elif department == "CFO":
+        result = cfo_agent(goal)
+    elif department == "HR":
+        result = hr_agent(goal)
+    elif department == "SALES":
+        result = sales_agent(goal)
+    else:
+        result = general_agent(goal)
 
     return {
-        "department": "CEO",
-        "assigned_agent": "CEO",
-        "result": f"Could not route task: {goal}",
-        "status": "failed",
+        "department": department,
+        "assigned_agent": result.get("assigned_agent", department),
+        "result": result.get("result", ""),
+        "status": result.get("status", "completed"),
+        "action": route.get("action", "none"),
+        "app": route.get("app"),
+        "url": route.get("url"),
     }

@@ -26,6 +26,7 @@ from app.crud import (
 from app.auth import verify_password, create_access_token
 from app.dependencies import get_current_user
 from app.agents.ceo_agent import ceo_agent
+from langchain_openrouter import ChatOpenRouter
 
 Base.metadata.create_all(bind=engine)
 
@@ -117,6 +118,16 @@ def run_agent(
         notification_whatsapp=getattr(payload, "notification_whatsapp", None),
     )
 
+    response = {
+        "status": "failed",
+        "result": "Unknown error",
+        "department": "CEO",
+        "assigned_agent": "Router",
+        "action": None,
+        "app": None,
+        "url": None,
+    }
+
     try:
         task = update_task_status(
             db=db,
@@ -135,8 +146,6 @@ def run_agent(
             assigned_agent=response.get("assigned_agent", "Router"),
         )
 
-        return task
-
     except Exception as e:
         task = update_task_status(
             db=db,
@@ -144,4 +153,21 @@ def run_agent(
             status_value="failed",
             result=str(e),
         )
-        return task
+        response["result"] = str(e)
+
+    return {
+        "id": task.id,
+        "goal": task.goal,
+        "department": task.department,
+        "assigned_agent": task.assigned_agent,
+        "result": task.result,
+        "status": task.status,
+        "owner_id": task.owner_id,
+        "notification_email": task.notification_email,
+        "notification_whatsapp": task.notification_whatsapp,
+        "created_at": task.created_at,
+        "updated_at": task.updated_at,
+        "action": response.get("action"),
+        "app": response.get("app"),
+        "url": response.get("url"),
+    }

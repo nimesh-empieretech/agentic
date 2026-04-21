@@ -93,12 +93,16 @@ def agent_history(
 ):
     tasks = (
         db.query(AgentTask)
-        .filter(AgentTask.owner_id == current_user.id)  # ✅ filter by token user
+        .filter(AgentTask.owner_id == current_user.id)
         .order_by(AgentTask.id.desc())
+        .execution_options(populate_existing=True)
         .all()
     )
 
-    return tasks if tasks else []
+    print(f"User: {current_user.id}, Tasks: {len(tasks)}")
+
+    return tasks
+
 
 @app.post("/agent/run", response_model=TaskResponse)
 def run_agent(

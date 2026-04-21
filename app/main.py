@@ -94,7 +94,7 @@ def agent_history(
     tasks = (
         db.query(AgentTask)
         .filter(AgentTask.owner_id == current_user.id)
-        .order_by(AgentTask.id.desc())
+        .order_by(AgentTask.id.asc())  # ✅ reverse order (old → new)
         .all()
     )
 
